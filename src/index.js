@@ -20,9 +20,17 @@
      * 上面两个同时执行，重复几率几乎是百分之百
      * 随机数重复的几率可以忽略不计
      * 两者结合一下
+     * 随机数放在前面，随机数重复的几率忽略不计，转成字符，如果截取前面的部分，那么重复的几率就也可以忽略不计
      * */
-    function createUniqueChar() {
-        return (new Date().getTime() + Math.random().toString().substring(2));
+    function createUniqueChar(radix = null) {
+        const numRadix = Number(radix);
+        const arrRadix = [2, 8, 10, 16, 36];
+        let unique = Math.random().toString().substring(2) + new Date().getTime();
+        if (arrRadix.indexOf(numRadix) !== -1) {
+            unique = Number(unique).toString(numRadix);
+        }
+
+        return unique;
     }
 
     return createUniqueChar;

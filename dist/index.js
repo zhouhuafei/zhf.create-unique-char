@@ -27,9 +27,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * 上面两个同时执行，重复几率几乎是百分之百
      * 随机数重复的几率可以忽略不计
      * 两者结合一下
+     * 随机数放在前面，随机数重复的几率忽略不计，转成字符，如果截取前面的部分，那么重复的几率就也可以忽略不计
      * */
     function createUniqueChar() {
-        return new Date().getTime() + Math.random().toString().substring(2);
+        var radix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+        var numRadix = Number(radix);
+        var arrRadix = [2, 8, 10, 16, 36];
+        var unique = Math.random().toString().substring(2) + new Date().getTime();
+        if (arrRadix.indexOf(numRadix) !== -1) {
+            unique = Number(unique).toString(numRadix);
+        }
+
+        return unique;
     }
 
     return createUniqueChar;
